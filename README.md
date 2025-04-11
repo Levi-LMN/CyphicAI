@@ -1,6 +1,8 @@
 # 🔐 CyphicAI  
 **Intelligent Security**
 
+**🌐** [www.cyphic.ai](https://levi-lmn.github.io/CyphicAI/)
+
 CyphicAI is an advanced cybersecurity company leveraging artificial intelligence to safeguard digital ecosystems against evolving threats. From real-time intrusion detection to AI model hardening, we offer a comprehensive suite of intelligent security solutions for modern enterprises.
 
 ---
@@ -75,7 +77,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 For partnerships, demos, or collaboration:
 
 **📧** hello@cyphicai.com  
-**🌐** [www.cyphicai.com](https://www.cyphicai.com) *(placeholder)*  
+**🌐** [www.cyphicai.com](https://www.cyphic.ai)  
 **📍** Nairobi, Kenya
 
 ---
