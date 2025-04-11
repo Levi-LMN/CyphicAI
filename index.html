@@ -184,6 +184,7 @@
 
 <body>
     <!-- Navigation -->
+    <!-- Navigation -->
     <nav class="fixed w-full z-50 glass-effect border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 sm:h-20">
@@ -195,6 +196,8 @@
                         <span class="ml-2 sm:ml-3 text-lg sm:text-xl font-bold text-gray-900">CyphicAI</span>
                     </div>
                 </div>
+
+                <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-6 lg:space-x-10">
                     <a href="#home" class="nav-link text-gray-700 hover:text-blue-600 transition font-medium">Home</a>
                     <a href="#services" class="nav-link text-gray-700 hover:text-blue-600 transition font-medium">Services</a>
@@ -202,16 +205,25 @@
                     <a href="#testimonials" class="nav-link text-gray-700 hover:text-blue-600 transition font-medium">Testimonials</a>
                     <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 transition font-medium">Contact</a>
                 </div>
+
+                <!-- Mobile Hamburger Button -->
                 <div class="flex items-center">
-                    <button class="px-4 py-2 sm:px-6 sm:py-2.5 text-sm sm:text-base bg-blue-600 text-white rounded-lg font-medium shadow-lg hover:bg-blue-700 transition transform hover:scale-105">Get Started</button>
-                    <button class="md:hidden ml-4 text-gray-700">
+                    <button class="md:hidden ml-4 text-gray-700" id="mobile-menu-toggle">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
-    </nav>
 
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden flex flex-col space-y-4 hidden px-4 pb-4">
+            <a href="#home" class="nav-link text-gray-700 hover:text-blue-600 transition font-medium py-2">Home</a>
+            <a href="#services" class="nav-link text-gray-700 hover:text-blue-600 transition font-medium py-2">Services</a>
+            <a href="#about" class="nav-link text-gray-700 hover:text-blue-600 transition font-medium py-2">About</a>
+            <a href="#testimonials" class="nav-link text-gray-700 hover:text-blue-600 transition font-medium py-2">Testimonials</a>
+            <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 transition font-medium py-2">Contact</a>
+        </div>
+    </nav>
     <!-- Responsive Hero Section -->
 <!-- Responsive Hero Section -->
 <section id="home" class="pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 overflow-hidden relative">
@@ -958,6 +970,17 @@
     </a>
 
     <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuButton = document.getElementById('mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuButton.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+
+
         // Smooth scrolling for anchor links
         document.addEventListener("DOMContentLoaded", function() {
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
