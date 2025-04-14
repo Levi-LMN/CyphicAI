@@ -179,6 +179,29 @@
                 gap: 2rem;
             }
         }
+        /* Active section indicator styles */
+.nav-link.active-section::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+}
+
+.nav-link.active-section {
+    font-weight: 600;
+}
+
+/* Add this to make the active section more noticeable */
+@media (max-width: 768px) {
+    .nav-link.active-section {
+        background-color: rgba(37, 99, 235, 0.1);
+        border-left: 3px solid var(--primary);
+        padding-left: 8px;
+    }
+}
     </style>
 </head>
 
@@ -971,74 +994,120 @@
 
     <script>
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const menuButton = document.getElementById('mobile-menu-toggle');
-            const mobileMenu = document.getElementById('mobile-menu');
-
-            menuButton.addEventListener('click', function () {
-                mobileMenu.classList.toggle('hidden');
-            });
+    document.addEventListener('DOMContentLoaded', function () {
+    // Mobile menu toggle
+    const menuButton = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    menuButton.addEventListener('click', function () {
+        mobileMenu.classList.toggle('hidden');
+    });
+    
+    // Close mobile menu when a nav link is clicked
+    const mobileNavLinks = document.querySelectorAll('#mobile-menu a');
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            mobileMenu.classList.add('hidden');
         });
-
-
-        // Smooth scrolling for anchor links
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
+    });
+    
+    // Breadcrumb functionality
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    // Function to update active section in navbar
+    function updateActiveSection() {
+        let scrollPosition = window.scrollY + 100; // Adding offset to account for fixed navbar
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                // Remove active class from all links
+                navLinks.forEach(link => {
+                    link.classList.remove('active-section');
+                    link.classList.remove('text-blue-600');
+                    link.classList.add('text-gray-700');
                 });
-            });
-
-            // Simple FAQ toggle
-            const faqButtons = document.querySelectorAll('.bg-white.p-6.rounded-xl button');
-            faqButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const content = button.nextElementSibling;
-                    const icon = button.querySelector('i');
-
-                    if (content.style.display === 'none' || content.style.display === '') {
-                        content.style.display = 'block';
-                        icon.classList.remove('fa-chevron-down');
-                        icon.classList.add('fa-chevron-up');
-                    } else {
-                        content.style.display = 'none';
-                        icon.classList.remove('fa-chevron-up');
-                        icon.classList.add('fa-chevron-down');
-                    }
-                });
-            });
-
-            // Animate elements on scroll
-            const animateOnScroll = () => {
-                const elements = document.querySelectorAll('.card-transition');
-
-                elements.forEach(element => {
-                    const position = element.getBoundingClientRect();
-
-                    // If element is in viewport
-                    if(position.top < window.innerHeight && position.bottom >= 0) {
-                        element.style.opacity = '1';
-                        element.style.transform = 'translateY(0)';
-                    }
-                });
-            };
-
-            // Set initial state
-            document.querySelectorAll('.card-transition').forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                el.style.transition = 'all 0.6s ease-out';
-            });
-
-            // Listen for scroll
-            window.addEventListener('scroll', animateOnScroll);
-
-            // Run once on load
-            animateOnScroll();
+                
+                // Add active class to current section link
+                const activeLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active-section');
+                    activeLink.classList.remove('text-gray-700');
+                    activeLink.classList.add('text-blue-600');
+                }
+            }
         });
+    }
+    
+    // Add scroll event listener for breadcrumb
+    window.addEventListener('scroll', updateActiveSection);
+    
+    // Run once on page load
+    updateActiveSection();
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // Simple FAQ toggle (keeping your existing code)
+    const faqButtons = document.querySelectorAll('.bg-white.p-6.rounded-xl button');
+    faqButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                content.style.display = 'none';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        });
+    });
+    
+    // Animate elements on scroll (keeping your existing code)
+    const animateOnScroll = () => {
+        const elements = document.querySelectorAll('.card-transition');
+        elements.forEach(element => {
+            const position = element.getBoundingClientRect();
+            // If element is in viewport
+            if(position.top < window.innerHeight && position.bottom >= 0) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }
+        });
+    };
+    
+    // Set initial state
+    document.querySelectorAll('.card-transition').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'all 0.6s ease-out';
+    });
+    
+    // Listen for scroll
+    window.addEventListener('scroll', animateOnScroll);
+    
+    // Run once on load
+    animateOnScroll();
+});
     </script>
 </body>
 </html>
